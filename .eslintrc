@@ -4,7 +4,7 @@
  * @Description:  
  * @Date: 2017-01-02 16:55:20 
  * @Last Modified by: Zz
- * @Last Modified time: 2017-01-11 15:15:29
+ * @Last Modified time: 2017-01-11 18:14:57
  */
 {
   "parser": "babel-eslint",
@@ -13,6 +13,8 @@
     "no-param-reassign": 0,
     "max-len": [1, 400],
     "global-require": 0,
-    "import/no-dynamic-require": 0
+    "import/no-dynamic-require": 0,
+    "guard-for-in": 0,
+    "no-restricted-syntax": "off"
   }
 }
