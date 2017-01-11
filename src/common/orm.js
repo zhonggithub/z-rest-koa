@@ -12,8 +12,10 @@ module.exports = {
     if (fs.existsSync()) {
       const files = fs.readdirSync(modelsDir);
       _.each(files, (v) => {
-        const model = require(`${modelsDir}/${v}`);
-        collections.push(model);
+        if (v.lastIndexOf('index.js') === -1) {
+          const model = require(`${modelsDir}/${v}`);
+          collections.push(model);
+        }
       });
     }
     return collections;
