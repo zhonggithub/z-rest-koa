@@ -62,7 +62,6 @@ export default class Controller {
     });
   }
   async create(ctx) {
-    this.a = '';
     const body = ctx.request.body;
     const judge = prp.isValidData(body, true);
     if (!judge.is) {
@@ -77,7 +76,7 @@ export default class Controller {
         common.koaErrorReturn(ctx.response, err.status, err);
         return;
       }
-      const result = await prp.rp.create(body);
+      const result = await prp.resourceProxy.create(body);
       const resData = prp.retData(result);
       common.packageResOfCS(ctx.response, resData);
     } catch (err) {

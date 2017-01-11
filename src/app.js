@@ -2,7 +2,7 @@
  * @Author: Zz 
  * @Date: 2017-01-02 16:22:01 
  * @Last Modified by: Zz
- * @Last Modified time: 2017-01-10 13:37:10
+ * @Last Modified time: 2017-01-11 09:50:14
  */
 import Koa from 'koa';
 import koaConvert from 'koa-convert';
@@ -14,12 +14,26 @@ import routes from './routes';
 
 const app = new Koa();
 
-const handleError = async (ctx, next) => {
+const errorHandler = async (ctx, next) => {
   try {
     await next();
   } catch (err) {
     ctx.status = err.status || 500;
-    ctx.body = { message: err.message, code: err.code || ctx.status };
+    ctx.body = { code: err.code, message: err.message };
+  }
+};
+
+const successHandler = async (ctx, next) => {
+  await next();
+  ctx.response.set('X-Server-Request-Id', ctx.reqId);
+  if (!ctx.status || (ctx.status >= 200 && ctx.status < 400)) {
+    if (ctx.formatBody !== false) {
+      ctx.body = {
+        code: 0,
+        message: 'success',
+        data: ctx.body,
+      };
+    }
   }
 };
 
@@ -28,7 +42,8 @@ app.use(cors())
     prefix: process.env.APP_PREFIX,
     maxAge: 100000000000,
   })))
-  .use(handleError)
+  .use(successHandler)
+  .use(errorHandler)
   .use(koaConvert(koaBunyanLogger({
     name: process.env.APP_NAME,
     level: (
