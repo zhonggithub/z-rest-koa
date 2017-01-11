@@ -1,0 +1,16 @@
+/*
+ * @Author: Zz 
+ * @Email: quitjie@gmail.com 
+ * @Description:  
+ * @Date: 2017-01-02 16:55:20 
+ * @Last Modified by:   Zz 
+ * @Last Modified time: 2017-01-02 16:55:20 
+ */
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb-base",
+  "rules": {
+    "no-param-reassign": 0,
+    "max-len": [1, 400]
+  }
+}

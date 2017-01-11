@@ -1,0 +1,21 @@
+/*
+ * @Author: Zz 
+ * @Email: quitjie@gmail.com 
+ * @Description:  
+ * @Date: 2017-01-02 16:55:32 
+ * @Last Modified by:   Zz 
+ * @Last Modified time: 2017-01-02 16:55:32 
+ */
+{
+  "presets": [
+    "es2015-node6/object-rest",
+    "stage-0"
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        "istanbul"
+      ]
+    }
+  }
+}
