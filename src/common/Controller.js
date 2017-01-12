@@ -28,7 +28,7 @@ export default class Controller {
  * @apiDescription  构造函数
  * @apiVersion 0.0.1
  *
- * @apiGroup ZController
+ * @apiGroup Controller
  * @apiParam (input) {class} resourceProxy 操作资源的CRUD代理类对象
  * @apiParam (input) {function} isValidData 判断C操作时的参数是否有效，形参为: ctx.request.body 必须返回一个JSON体: {'is': true, 'error': '', 'flag':0}
  * @apiParam (input) {function} isValidUpateData 判断U操作时参数的有效性，形参为: ctx.request.body，必须返回一个JSON体: {'is': true, 'error': '', 'flag':0}
