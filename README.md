@@ -4,6 +4,7 @@
 ##有哪些功能？
 
 * Controller类定义了CRUD等操作，如果您需要定制化自己的CRUD操作，您可以继承该类,然后重写它的方法;类的构造函数参数为Json格式的opts，参数说明见下表：
+
 |参数名称|类型|是否必填|说明|
 |---|---|---|---|
 |resourceOperator|Object|是|Operator类对象，操作资源的CRUD代理类对象|
