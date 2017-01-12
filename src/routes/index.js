@@ -1,6 +1,7 @@
 import Router from 'koa-router';
 import rawBody from 'raw-body';
 import fs from 'fs';
+import accountRes from './account';
 
 const getBody = async (ctx, next) => {
   try {
@@ -13,6 +14,8 @@ const getBody = async (ctx, next) => {
 };
 
 const router = new Router();
+
+router.post('/api/zRestKoa/accounts', getBody, accountRes.create);
 
 router.get('*', async (ctx) => {
   ctx.type = 'html';

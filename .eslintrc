@@ -4,7 +4,7 @@
  * @Description:  
  * @Date: 2017-01-02 16:55:20 
  * @Last Modified by: Zz
- * @Last Modified time: 2017-01-11 18:14:57
+ * @Last Modified time: 2017-01-12 11:00:16
  */
 {
   "parser": "babel-eslint",
@@ -15,6 +15,8 @@
     "global-require": 0,
     "import/no-dynamic-require": 0,
     "guard-for-in": 0,
-    "no-restricted-syntax": "off"
+    "no-restricted-syntax": "off",
+    "class-methods-use-this": "off",
+    "no-await-in-loop": "off"
   }
 }

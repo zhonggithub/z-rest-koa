@@ -40,7 +40,6 @@ export default {
     dec += decipher.final('utf8');
     return dec;
   },
-  
   packageRet200(ctx, retData, convertDataFunc) {
     ctx.status = 200;
     ctx.body = convertDataFunc ? convertDataFunc(retData) : retData;

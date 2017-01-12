@@ -64,7 +64,7 @@ export default class Controller {
     });
   }
 
-  static async create(ctx) {
+  async create(ctx) {
     const body = ctx.request.body;
     const judge = prp.isValidData(body, true);
     if (!judge.is) {
@@ -84,7 +84,7 @@ export default class Controller {
     ctx.status = 201;
   }
 
-  static async update(ctx) {
+  async update(ctx) {
     const body = ctx.query.body;
     const judge = prp.isValidUpateData(body);
     if (!judge.is) {
@@ -103,7 +103,7 @@ export default class Controller {
     ctx.status = 200;
   }
 
-  static async retrieve(ctx) {
+  async retrieve(ctx) {
     const judge = common.isValidQueryParams(ctx.request.query, prp.isValidQueryParams, null);
     if (!judge.is) {
       ctx.throw(judge.error, 422);
@@ -121,7 +121,7 @@ export default class Controller {
     ctx.status = 200;
   }
 
-  static async delete(ctx) {
+  async delete(ctx) {
     const id = ctx.params.id;
     const ret = await prp.rp.deleteById(id);
     if (!ret) {
@@ -133,7 +133,7 @@ export default class Controller {
     ctx.status = 204;
   }
 
-  static async logicDelete(ctx) {
+  async logicDelete(ctx) {
     const id = ctx.params.id;
     const ret = await prp.rp.logicDeleteById(id);
     if (!ret) {
@@ -145,7 +145,7 @@ export default class Controller {
     ctx.status = 204;
   }
 
-  static async list(ctx) {
+  async list(ctx) {
     const judge = common.isValidQueryParams(ctx.request.query, prp.isValidQueryParams, prp.isExpandValid);
     if (!judge.is) {
       ctx.throw(judge.error, 422);
@@ -159,13 +159,13 @@ export default class Controller {
     ctx.status = 200;
   }
 
-  static async count(ctx) {
+  async count(ctx) {
     const total = await prp.rp.count(ctx.request.query);
     ctx.body = { total };
     ctx.status = 200;
   }
 
-  static async batchDeleteById(ctx) {
+  async batchDeleteById(ctx) {
     const body = ctx.request.body;
     let error = verify(body, ['method', 'bizContent']);
     if (error) {

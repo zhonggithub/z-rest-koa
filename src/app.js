@@ -2,7 +2,7 @@
  * @Author: Zz
  * @Date: 2017-01-02 16:22:01
  * @Last Modified by: Zz
- * @Last Modified time: 2017-01-11 16:48:02
+ * @Last Modified time: 2017-01-12 17:13:20
  */
 import Koa from 'koa';
 import koaConvert from 'koa-convert';
@@ -11,7 +11,7 @@ import koaStaticCache from 'koa-static-cache';
 import cors from 'koa2-cors';
 import './env';
 import routes from './routes';
-import dbOrm from './common';
+import { dbOrm } from './common';
 import dbConfig from './dbConfig';
 
 const app = new Koa();
@@ -62,17 +62,14 @@ routes(app);
 
 export default app;
 
-if (!module.parent) {
-  const collections = dbOrm.readModel();
-  collections.forEach((item) => {
-    dbOrm.orm.loadCollection(item);
-  });
-  dbOrm.orm.initialize(dbConfig, (err, models) => {
-    if (err) {
-      throw err;
-    }
-    dbOrm.models = models;
-    dbOrm.collections = models.collections;
+dbOrm.orm.initialize(dbConfig, (err, models) => {
+  if (err) {
+    throw err;
+  }
+  dbOrm.models = models;
+  dbOrm.collections = models.collections;
+  if (!module.parent) {
     app.listen(process.env.PORT);
-  });
-}
+    console.log(`listen: ${process.env.PORT}`);
+  }
+});

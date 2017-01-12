@@ -1,6 +1,6 @@
-import waterline from 'waterline';
+import Waterline from 'waterline';
 // ---- Account
-module.exports = waterline.Collection.extend({
+module.exports = Waterline.Collection.extend({
   identity: 'tb_account',
   tableName: 'tb_account',
   connection: 'mongodb',
@@ -17,10 +17,6 @@ module.exports = waterline.Collection.extend({
     password: {
       type: 'string',
       defaultsTo: '',
-    },
-    status: {
-      type: 'integer',
-      defaultsTo: 0,
     },
     deleteFlag: {
       type: 'integer',

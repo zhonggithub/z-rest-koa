@@ -2,7 +2,7 @@
  * @Author: Zz
  * @Date: 2017-01-11 11:06:03
  * @Last Modified by: Zz
- * @Last Modified time: 2017-01-11 14:19:59
+ * @Last Modified time: 2017-01-12 15:03:11
  */
 const imp = {};
 
@@ -27,33 +27,33 @@ export default class Operator {
     imp.convertQueryCriteria = convertQueryCriteria;
     imp.convertCountCriteria = convertCountCriteria;
   }
-  static async create(logicInfo) {
+  async create(logicInfo) {
     try {
       const dbInfo = convert2DBInfo(logicInfo);
-      const ret = await imp.resourceModule.create(dbInfo);
+      const ret = await imp.resourceModule().create(dbInfo);
       return Promise.resolve(convert2LogicInfo(ret));
     } catch (error) {
       return Promise.reject(error);
     }
   }
 
-  static async update(id, logicInfo) {
+  async update(id, logicInfo) {
     try {
-      const findInfo = await imp.resourceModule.findOne({ id });
+      const findInfo = await imp.resourceModule().findOne({ id });
       if (!findInfo) {
         return Promise.resolve(null);
       }
       const dbInfo = convertUpdate2DBInfo(logicInfo);
-      const ret = await imp.resourceModule.update({ id }, dbInfo);
+      const ret = await imp.resourceModule().update({ id }, dbInfo);
       return Promise.resolve(convert2LogicInfo(ret));
     } catch (error) {
       return Promise.reject(error);
     }
   }
 
-  static async retrieve(id) {
+  async retrieve(id) {
     try {
-      const ret = await imp.resourceModule.findOne({ id });
+      const ret = await imp.resourceModule().findOne({ id });
       if (!ret) {
         return Promise.resolve(null);
       }
@@ -63,32 +63,32 @@ export default class Operator {
     }
   }
 
-  static async deleteById(id) {
+  async deleteById(id) {
     try {
-      const findInfo = await imp.resourceModule.findOne({ id });
+      const findInfo = await imp.resourceModule().findOne({ id });
       if (!findInfo) {
         return Promise.resolve(null);
       }
-      const ret = await imp.resourceModule.destroy({ id });
+      const ret = await imp.resourceModule().destroy({ id });
       return Promise.resolve(ret);
     } catch (error) {
       return Promise.reject(error);
     }
   }
 
-  static async logicDeleteById(id) {
+  async logicDeleteById(id) {
     try {
-      const ret = await imp.resourceModule.update({ id }, { deleteTag: 1 });
+      const ret = await imp.resourceModule().update({ id }, { deleteTag: 1 });
       return Promise.resolve(ret);
     } catch (error) {
       return Promise.reject(error);
     }
   }
 
-  static async list(query) {
+  async list(query) {
     try {
       const criteria = imp.convertQueryCriteria(query);
-      const ret = await imp.resourceModule.find(criteria);
+      const ret = await imp.resourceModule().find(criteria);
       const infoArray = ret.map(item => convert2LogicInfo(item));
       return Promise.resolve(infoArray);
     } catch (error) {
@@ -96,23 +96,23 @@ export default class Operator {
     }
   }
 
-  static async count(query) {
+  async count(query) {
     try {
       const criteria = imp.convertQueryCriteria(query);
-      const total = await imp.resourceModule.count(criteria);
+      const total = await imp.resourceModule().count(criteria);
       return Promise.resolve(total);
     } catch (error) {
       return Promise.reject(error);
     }
   }
 
-  static async delete(method, criteria) {
+  async delete(method, criteria) {
     try {
       if (method === 'delete') {
-        const ret = await imp.resourceModule.destroy(criteria);
+        const ret = await imp.resourceModule().destroy(criteria);
         return Promise.resolve(ret);
       }
-      const ret = await imp.resourceModule.update(criteria, { deleteTag: 1 });
+      const ret = await imp.resourceModule().update(criteria, { deleteTag: 1 });
       return Promise.resolve(ret);
     } catch (error) {
       return Promise.reject(error);

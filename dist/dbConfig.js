@@ -1,9 +1,15 @@
-import mongodbAdapter from 'sails-mongo';
+'use strict';
+
+var _sailsMongo = require('sails-mongo');
+
+var _sailsMongo2 = _interopRequireDefault(_sailsMongo);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
   adapters: {
-    default: mongodbAdapter,
-    mongodb: mongodbAdapter,
+    default: _sailsMongo2.default,
+    mongodb: _sailsMongo2.default
   },
   connections: {
     mongodb: {
@@ -13,10 +19,10 @@ module.exports = {
       port: 27017,
       // user: 'root',
       // password : '123456',
-      database: 'z-rest-koa',
-    },
+      database: 'z-rest-koa'
+    }
   },
   defaults: {
-    migrate: 'safe',
-  },
+    migrate: 'safe'
+  }
 };

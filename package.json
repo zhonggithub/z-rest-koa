@@ -14,7 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "cross-env": "^3.1.4",
-    "dotenv": "^2.0.0",
+    "dotenv": "^4.0.0",
+    "fetch-mock": "^5.8.1",
     "koa": "^2.0.0",
     "koa-bunyan-logger": "^1.3.0",
     "koa-convert": "^1.2.0",
@@ -26,7 +27,7 @@
     "raw-body": "^2.2.0",
     "sails-mongo": "^0.12.2",
     "waterline": "^0.11.6",
-    "z-error": "0.0.9"
+    "z-error": "0.0.10"
   },
   "devDependencies": {
     "ava": "^0.17.0",
