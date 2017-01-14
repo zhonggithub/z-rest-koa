@@ -1,3 +1,9 @@
+/*
+ * @Author: Zz
+ * @Date: 2017-01-14 23:29:17
+ * @Last Modified by:   Zz
+ * @Last Modified time: 2017-01-14 23:29:17
+ */
 import { verify } from 'z-error';
 import common from './common';
 
@@ -32,7 +38,7 @@ export default {
       return;
     }
     const id = ctx.params.id;
-    const ret = await prp.rp.update(id, body);
+    const ret = await prp.resourceProxy.update(id, body);
     if (!ret) {
       const err = common.error404();
       err.description = `You can't to update resource because the resource of url(${ctx.url}) is not exist.`;
@@ -50,7 +56,7 @@ export default {
       return;
     }
     const id = ctx.params.id;
-    const ret = await prp.rp.retrieve(id);
+    const ret = await prp.resourceProxy.retrieve(id);
     if (!ret) {
       const err = common.error404();
       err.description = `You can't to retrieve resource because the resource of url(${ctx.url}) is not exist.`;
@@ -63,7 +69,7 @@ export default {
 
   async delete(ctx) {
     const id = ctx.params.id;
-    const ret = await prp.rp.deleteById(id);
+    const ret = await prp.resourceProxy.deleteById(id);
     if (!ret) {
       const err = common.error404();
       err.description = `You can't to delete resource because the resource of url(${ctx.url}) is not exist.`;
@@ -75,7 +81,7 @@ export default {
 
   async logicDelete(ctx) {
     const id = ctx.params.id;
-    const ret = await prp.rp.logicDeleteById(id);
+    const ret = await prp.resourceProxy.logicDeleteById(id);
     if (!ret) {
       const err = common.error404();
       err.description = `You can't to delete resource because the resource of url(${ctx.url}) is not exist.`;
@@ -93,14 +99,14 @@ export default {
     }
     ctx.request.query.offset = common.ifReturnNum(ctx.request.query.offset, 0);
     ctx.request.query.limit = common.ifReturnNum(ctx.request.query.limit, 25);
-    const result = await prp.rp.list(ctx.request.query);
-    const total = await prp.rp.count(ctx.request.query);
+    const result = await prp.resourceProxy.list(ctx.request.query);
+    const total = await prp.resourceProxy.count(ctx.request.query);
     ctx.body = prp.retListData(ctx.request.query, result, total);
     ctx.status = 200;
   },
 
   async count(ctx) {
-    const total = await prp.rp.count(ctx.request.query);
+    const total = await prp.resourceProxy.count(ctx.request.query);
     ctx.body = { total };
     ctx.status = 200;
   },
@@ -117,7 +123,7 @@ export default {
       ctx.throw(error, 422);
       return;
     }
-    await prp.rp.delete(body.method, { id: body.bizContent.items });
+    await prp.resourceProxy.delete(body.method, { id: body.bizContent.items });
     ctx.status = 204;
   },
 };
