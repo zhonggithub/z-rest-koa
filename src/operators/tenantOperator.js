@@ -1,10 +1,45 @@
 /*
  * @Author: Zz
- * @Date: 2017-01-11 11:06:03
+ * @Date: 2017-01-14 21:54:41
  * @Last Modified by: Zz
- * @Last Modified time: 2017-01-14 21:48:01
+ * @Last Modified time: 2017-01-14 22:25:53
  */
-const imp = {};
+import { dbOrm, common } from '../common';
+
+const imp = {
+  convertQueryCriteria: (criteria) => {
+    let tmpCriteria = JSON.parse(JSON.stringify(criteria));
+    tmpCriteria = common.convertQueryCriteria(tmpCriteria);
+    const dbCriteria = tmpCriteria.dstCriteria;
+    tmpCriteria = tmpCriteria.sourceCriteria;
+    for (const condition in tmpCriteria) {
+      switch (condition) {
+        case 'name': {
+          if (tmpCriteria[condition].indexOf('*') === -1) {
+            dbCriteria[`canton.${condition}`] = tmpCriteria[condition];
+          } else {
+            const reg = /\*/g;
+            const str = criteria[condition].replace(reg, '%');
+            dbCriteria[`canton.${condition}`] = { like: str };
+          }
+        } break;
+        default:
+          dbCriteria[condition] = tmpCriteria[condition];
+          break;
+      }
+    }
+    dbCriteria.deleteFlag = { '!': 1 };
+    return dbCriteria;
+  },
+
+  convertCountCriteria: (criteria) => {
+    const dbCriteria = common.convertCountCriteria(criteria);
+    dbCriteria.deleteFlag = { '!': 1 };
+    return dbCriteria;
+  },
+
+  resourceModule: () => dbOrm.collections.tb_tenant,
+};
 
 function convert2DBInfo(logicInfo) {
   return (imp.ResourceDBInfo ? new imp.ResourceDBInfo(logicInfo) : logicInfo);
@@ -18,15 +53,7 @@ function convert2LogicInfo(dbInfo) {
   return (imp.ResourceLogicInfo ? new imp.ResourceLogicInfo(dbInfo) : dbInfo);
 }
 
-export default class Operator {
-  // constructor(resourceModule, ResourceLogicInfo, ResourceDBInfo, ResourceUpdateDBInfo, convertQueryCriteria, convertCountCriteria) {
-  //   imp.resourceModule = resourceModule;
-  //   imp.ResourceLogicInfo = ResourceLogicInfo;
-  //   imp.ResourceDBInfo = ResourceDBInfo;
-  //   imp.ResourceUpdateDBInfo = ResourceUpdateDBInfo;
-  //   imp.convertQueryCriteria = convertQueryCriteria;
-  //   imp.convertCountCriteria = convertCountCriteria;
-  // }
+export default {
   async create(logicInfo) {
     try {
       const dbInfo = convert2DBInfo(logicInfo);
@@ -35,7 +62,7 @@ export default class Operator {
     } catch (error) {
       return Promise.reject(error);
     }
-  }
+  },
 
   async update(id, logicInfo) {
     try {
@@ -49,7 +76,7 @@ export default class Operator {
     } catch (error) {
       return Promise.reject(error);
     }
-  }
+  },
 
   async retrieve(id) {
     try {
@@ -61,7 +88,7 @@ export default class Operator {
     } catch (error) {
       return Promise.reject(error);
     }
-  }
+  },
 
   async deleteById(id) {
     try {
@@ -74,7 +101,7 @@ export default class Operator {
     } catch (error) {
       return Promise.reject(error);
     }
-  }
+  },
 
   async logicDeleteById(id) {
     try {
@@ -83,7 +110,7 @@ export default class Operator {
     } catch (error) {
       return Promise.reject(error);
     }
-  }
+  },
 
   async list(query) {
     try {
@@ -94,7 +121,7 @@ export default class Operator {
     } catch (error) {
       return Promise.reject(error);
     }
-  }
+  },
 
   async count(query) {
     try {
@@ -104,7 +131,7 @@ export default class Operator {
     } catch (error) {
       return Promise.reject(error);
     }
-  }
+  },
 
   async delete(method, criteria) {
     try {
@@ -117,5 +144,5 @@ export default class Operator {
     } catch (error) {
       return Promise.reject(error);
     }
-  }
-}
+  },
+};

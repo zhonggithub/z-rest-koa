@@ -7,10 +7,10 @@ test.afterEach.always(() => {
   fetchMock.restore();
 });
 
-const mockAccount = {
-  username: `${Math.random()}00000000`,
-  account: `${Math.random()}1210`,
-  password: '2536',
+const mockTenant = {
+  name: `${Math.random()}00000000`,
+  key: `${Math.random()}1210`,
+  customData: {},
 };
 
 function sleep(ms) {
@@ -25,8 +25,8 @@ test.before(async () => {
   return Promise.resolve({});
 });
 
-test.serial('POST /api/zRestKoa/accounts ok', async (t) => {
-  const res = await request.post('/api/zRestKoa/accounts').send(mockAccount);
+test.serial('POST /api/account/v1/tenants ok', async (t) => {
+  const res = await request.post('/api/account/v1/tenants').send(mockTenant);
   if (res.status >= 400) console.log(res.text);
   t.is(res.status, 201);
   // console.log(res.body);

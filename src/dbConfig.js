@@ -9,7 +9,7 @@ module.exports = {
     mongodb: {
       adapter: 'mongodb',
       // url : 'mongodb://' + config.configForDB.connection.host + ':' + config.configForDB.connection.port + '/' + config.configForDB.connection.database
-      host: 'localhost',
+      host: '192.168.0.104', // 'localhost',
       port: 27017,
       // user: 'root',
       // password : '123456',

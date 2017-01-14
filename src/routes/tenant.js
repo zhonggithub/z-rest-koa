@@ -1,13 +1,13 @@
 import { verify } from 'z-error';
 import { common } from '../common';
-import { accountProxy } from '../proxys';
+import { tenantProxy } from '../proxys';
 
-const prp = accountProxy;
+const prp = tenantProxy;
 
 export default {
   async create(ctx) {
     const body = ctx.request.body;
-    const judge = prp.isValidData(body, true);
+    const judge = tenantProxy.isValidData(body, true);
     if (!judge.is) {
       ctx.throw(judge.error, 422);
       return;

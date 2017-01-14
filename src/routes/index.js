@@ -1,7 +1,8 @@
 import Router from 'koa-router';
 import rawBody from 'raw-body';
 import fs from 'fs';
-import accountRes from './account';
+import account from './account';
+import tenant from './tenant';
 
 const getBody = async (ctx, next) => {
   try {
@@ -15,7 +16,10 @@ const getBody = async (ctx, next) => {
 
 const router = new Router();
 
-router.post('/api/zRestKoa/accounts', getBody, accountRes.create);
+router.post('/api/account/:version/accounts', getBody, account.create);
+
+// tenant
+router.post('/api/account/:version/tenants', getBody, tenant.create);
 
 router.get('*', async (ctx) => {
   ctx.type = 'html';
