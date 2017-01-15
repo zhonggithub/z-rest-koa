@@ -1,8 +1,8 @@
 /*
  * @Author: Zz
  * @Date: 2017-01-14 23:29:17
- * @Last Modified by:   Zz
- * @Last Modified time: 2017-01-14 23:29:17
+ * @Last Modified by: Zz
+ * @Last Modified time: 2017-01-16 00:03:44
  */
 import { verify } from 'z-error';
 import common from './common';
@@ -31,7 +31,7 @@ export default {
   },
 
   async update(ctx) {
-    const body = ctx.query.body;
+    const body = ctx.request.body;
     const judge = prp.isValidUpateData(body);
     if (!judge.is) {
       ctx.throw(judge.error, 422);
@@ -50,7 +50,7 @@ export default {
   },
 
   async retrieve(ctx) {
-    const judge = common.isValidQueryParams(ctx.request.query, prp.isValidQueryParams, null);
+    const judge = common.isValidQueryParams(ctx.query, prp.isValidQueryParams, null);
     if (!judge.is) {
       ctx.throw(judge.error, 422);
       return;
@@ -92,21 +92,21 @@ export default {
   },
 
   async list(ctx) {
-    const judge = common.isValidQueryParams(ctx.request.query, prp.isValidQueryParams, prp.isExpandValid);
+    const judge = common.isValidQueryParams(ctx.query, prp.isValidQueryParams, prp.isExpandValid);
     if (!judge.is) {
       ctx.throw(judge.error, 422);
       return;
     }
-    ctx.request.query.offset = common.ifReturnNum(ctx.request.query.offset, 0);
-    ctx.request.query.limit = common.ifReturnNum(ctx.request.query.limit, 25);
-    const result = await prp.resourceProxy.list(ctx.request.query);
-    const total = await prp.resourceProxy.count(ctx.request.query);
-    ctx.body = prp.retListData(ctx.request.query, result, total);
+    ctx.query.offset = common.ifReturnNum(ctx.query.offset, 0);
+    ctx.query.limit = common.ifReturnNum(ctx.query.limit, 25);
+    const result = await prp.resourceProxy.list(ctx.query);
+    const total = await prp.resourceProxy.count(ctx.query);
+    ctx.body = prp.retListData(ctx.query, result, total);
     ctx.status = 200;
   },
 
   async count(ctx) {
-    const total = await prp.resourceProxy.count(ctx.request.query);
+    const total = await prp.resourceProxy.count(ctx.query);
     ctx.body = { total };
     ctx.status = 200;
   },

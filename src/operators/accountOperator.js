@@ -2,9 +2,16 @@
  * @Author: Zz
  * @Date: 2017-01-14 21:54:41
  * @Last Modified by: Zz
- * @Last Modified time: 2017-01-14 22:28:17
+ * @Last Modified time: 2017-01-15 11:06:13
  */
 import { dbOrm, common } from '../common';
+
+class ResourceLogicInfo {
+  constructor(dbInfo) {
+    this.name = dbInfo.name;
+    this.account = dbInfo.account;
+  }
+}
 
 const imp = {
   convertQueryCriteria: (criteria) => {
@@ -39,6 +46,7 @@ const imp = {
   },
 
   resourceModule: () => dbOrm.collections.tb_account,
+  ResourceLogicInfo,
 };
 
 function convert2DBInfo(logicInfo) {
