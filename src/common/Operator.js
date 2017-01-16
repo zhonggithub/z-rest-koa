@@ -2,7 +2,7 @@
  * @Author: Zz
  * @Date: 2017-01-11 11:06:03
  * @Last Modified by: Zz
- * @Last Modified time: 2017-01-14 21:48:01
+ * @Last Modified time: 2017-01-16 21:10:14
  */
 const imp = {};
 
@@ -78,7 +78,7 @@ export default class Operator {
 
   async logicDeleteById(id) {
     try {
-      const ret = await imp.resourceModule().update({ id }, { deleteTag: 1 });
+      const ret = await imp.resourceModule().update({ id }, { deleteFlag: 1 });
       return Promise.resolve(ret);
     } catch (error) {
       return Promise.reject(error);
@@ -112,7 +112,7 @@ export default class Operator {
         const ret = await imp.resourceModule().destroy(criteria);
         return Promise.resolve(ret);
       }
-      const ret = await imp.resourceModule().update(criteria, { deleteTag: 1 });
+      const ret = await imp.resourceModule().update(criteria, { deleteFlag: 1 });
       return Promise.resolve(ret);
     } catch (error) {
       return Promise.reject(error);
